@@ -1,0 +1,50 @@
+﻿@using PrimeNumber.Data.Entity;
+@model IEnumerable<BaseEntity>
+
+@{
+    var inputs = ViewBag.Inputs as IEnumerable<Input>;
+    var results = ViewBag.Results as IEnumerable<Result>;
+}
+
+<h2>Admin Panel</h2>
+<h3>Inputs</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Number</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var input in inputs)
+        {
+            <tr>
+                <td>@input.Id</td>
+                <td>@input.Number</td>
+                <td>@input.CreatedDate</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Results</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Max Prime Number</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var result in results)
+        {
+            <tr>
+                <td>@result.Id</td>
+                <td>@result.MaxPrimeNumber</td>
+                <td>@result.CreatedDate</td>
+            </tr>
+        }
+    </tbody>
+</table>

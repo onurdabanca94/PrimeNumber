@@ -1,0 +1,33 @@
+﻿@using PrimeNumber.Core.Models;
+@model List<ResultResponseModel>
+
+<h2>Admin Panel</h2>
+
+
+<h3>Sonuçlar</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">UserId</th>
+            <th scope="col">En Büyük Asal Sayı</th>
+            <th scope="col">Tüm Girişler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var result in Model)
+            {
+                var orderNo = @Model.IndexOf(result) + 1;
+                <tr>
+                    <th scope="row">@orderNo</th>
+                    <td>@result.UserId</td>
+                    <td>@result.MaxPrime</td>
+                    <td>@string.Join(',', result.Inputs)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

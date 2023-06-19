@@ -1,0 +1,65 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+
+    <div>
+        <h2>Girdiğiniz en büyük prime sayı: </h2>
+        <h2 id="result">0</h2>
+    </div>
+
+    <input type="number" id="primenumber" name="primenumber" />
+    <input id="btnSubmit" type="button" value="Gönder" />
+
+    <script>
+        var submit = document.querySelector("#btnSubmit").addEventListener('click', async function (e) {
+            e.preventDefault();
+
+            var prime = document.querySelector('#primenumber');
+
+            if (prime) {
+                let primenumber = parseInt(prime.value);
+
+                if (primenumber > 1) {
+                    var data = {
+                        prime: primenumber,
+                        userId: getUserId()
+                    }
+                    let primeApi = 'http://localhost:5228/home/addprime'
+                    let result = await fetch(primeApi,
+                        {
+                            method: "POST",
+                            credentials: "same-origin",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify(data),
+                        })
+
+                    if (result.ok) {
+                        let resultArea = document.querySelector('#result');
+                        if (resultArea) {
+                            result = await result.json();
+                            resultArea.innerHTML = result.maxPrime ?? 0
+                        }
+                    }
+
+                    prime.value = 0;
+                    return;
+                }
+            }
+            alert("lütfen geçerli bir sayı girin");
+        })
+
+        function getUserId() {
+            var userId = localStorage.getItem('userId')
+            if (userId)
+                return userId;
+
+            userId = '@Guid.NewGuid()';
+            localStorage.setItem('userId', userId);
+            return userId;
+        }
+    </script>
+</div>
